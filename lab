@@ -1,0 +1,122 @@
+> use rakshith
+switched to db rakshith
+> show dbs
+1NT19IS178  0.000GB
+admin       0.000GB
+batch1      0.000GB
+bigdata     0.000GB
+chand123    0.000GB
+chandinitr  0.000GB
+config      0.000GB
+empl        0.000GB
+local       0.000GB
+srajan      0.000GB
+> db
+rakshith
+> db.student.insertone({studentno:"1",Name:"rakshith",place:"bangalore"})
+uncaught exception: TypeError: db.student.insertone is not a function :
+@(shell):1:1
+> db.student.insert({studentno:"1",Name:"rakshith",place:"bangalore"})
+WriteResult({ "nInserted" : 1 })
+> show dbs
+1NT19IS178  0.000GB
+admin       0.000GB
+batch1      0.000GB
+bigdata     0.000GB
+chand123    0.000GB
+chandinitr  0.000GB
+config      0.000GB
+empl        0.000GB
+local       0.000GB
+rakshith    0.000GB
+srajan      0.000GB
+> db.student.insert({studentno:"2",Name:"ahdhu",place:"mysore"})
+WriteResult({ "nInserted" : 1 })
+> show dbs
+1NT19IS178  0.000GB
+admin       0.000GB
+batch1      0.000GB
+bigdata     0.000GB
+chand123    0.000GB
+chandinitr  0.000GB
+config      0.000GB
+empl        0.000GB
+local       0.000GB
+rakshith    0.000GB
+srajan      0.000GB
+> db.createCollection("mycollection")
+{ "ok" : 1 }
+> show collections
+mycollection
+student
+> db.student.insertMany([{studentno:3,name:"ram",place:"hubbali"},{studentno:4,name:"bheem",place:"chennai"}])
+{
+	"acknowledged" : true,
+	"insertedIds" : [
+		ObjectId("624bbdb746246280f289ad1c"),
+		ObjectId("624bbdb746246280f289ad1d")
+	]
+}
+> db.student.update({'name':'ram'},{$set:{'name':'ramesh'}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> show dbs
+1NT19IS178  0.000GB
+admin       0.000GB
+batch1      0.000GB
+bigdata     0.000GB
+chand123    0.000GB
+chandinitr  0.000GB
+config      0.000GB
+empl        0.000GB
+local       0.000GB
+rakshith    0.000GB
+srajan      0.000GB
+> show collection
+uncaught exception: Error: don't know how to show [collection] :
+shellHelper.show@src/mongo/shell/utils.js:1211:11
+shellHelper@src/mongo/shell/utils.js:838:15
+@(shellhelp2):1:1
+> show collections
+mycollection
+student
+> db.student.find()
+{ "_id" : ObjectId("624bbc6646246280f289ad1a"), "studentno" : "1", "Name" : "rakshith", "place" : "bangalore" }
+{ "_id" : ObjectId("624bbc9a46246280f289ad1b"), "studentno" : "2", "Name" : "ahdhu", "place" : "mysore" }
+{ "_id" : ObjectId("624bbdb746246280f289ad1c"), "studentno" : 3, "name" : "ramesh", "place" : "hubbali" }
+{ "_id" : ObjectId("624bbdb746246280f289ad1d"), "studentno" : 4, "name" : "bheem", "place" : "chennai" }
+> db.student.findone({'studentno':'1'})
+uncaught exception: TypeError: db.student.findone is not a function :
+@(shell):1:1
+> db.student.findOne({'studentno':'1'})
+{
+	"_id" : ObjectId("624bbc6646246280f289ad1a"),
+	"studentno" : "1",
+	"Name" : "rakshith",
+	"place" : "bangalore"
+}
+> db.student.find({$and:[{"name":"rakshith"},{"place":"bangalore"}]}).pretty()
+> db.student.find({$and:[{"name":"rakshith"},{"place":"bangalore"}]})
+> db.student.find({$and:[{"Name":"rakshith"},{"place":"bangalore"}]})
+{ "_id" : ObjectId("624bbc6646246280f289ad1a"), "studentno" : "1", "Name" : "rakshith", "place" : "bangalore" }
+> db.student.find({$or:[{"Name":"ramesh"},{"place":"bangalore"}]})
+{ "_id" : ObjectId("624bbc6646246280f289ad1a"), "studentno" : "1", "Name" : "rakshith", "place" : "bangalore" }
+> db.student.find({$or:[{"Name":"ramesh"},{"place":"bangalore"}]}).pretty()
+{
+	"_id" : ObjectId("624bbc6646246280f289ad1a"),
+	"studentno" : "1",
+	"Name" : "rakshith",
+	"place" : "bangalore"
+}
+> db.student.remove({"Name":"ramesh"})
+WriteResult({ "nRemoved" : 0 })
+> db.student.find()
+{ "_id" : ObjectId("624bbc6646246280f289ad1a"), "studentno" : "1", "Name" : "rakshith", "place" : "bangalore" }
+{ "_id" : ObjectId("624bbc9a46246280f289ad1b"), "studentno" : "2", "Name" : "ahdhu", "place" : "mysore" }
+{ "_id" : ObjectId("624bbdb746246280f289ad1c"), "studentno" : 3, "name" : "ramesh", "place" : "hubbali" }
+{ "_id" : ObjectId("624bbdb746246280f289ad1d"), "studentno" : 4, "name" : "bheem", "place" : "chennai" }
+> db.student.remove({"studentno":"1"})
+WriteResult({ "nRemoved" : 1 })
+> db.student.find()
+{ "_id" : ObjectId("624bbc9a46246280f289ad1b"), "studentno" : "2", "Name" : "ahdhu", "place" : "mysore" }
+{ "_id" : ObjectId("624bbdb746246280f289ad1c"), "studentno" : 3, "name" : "ramesh", "place" : "hubbali" }
+{ "_id" : ObjectId("624bbdb746246280f289ad1d"), "studentno" : 4, "name" : "bheem", "place" : "chennai" }
