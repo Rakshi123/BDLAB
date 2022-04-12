@@ -176,3 +176,10 @@ WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
 > db.student.find()
 { "_id" : ObjectId("6254f5451c3b4b8c58ec8e94"), "studentno" : "1", "Name" : "Madhuri", "place" : "Hebbal" }
 { "_id" : ObjectId("6254fb4ca0ec4ee1af44fe30"), "studentno" : "2", "Name" : "Rakshith", "place" : "yelahanka" }
+> db.student.find().sort({Name:1})
+{ "_id" : ObjectId("6254f5451c3b4b8c58ec8e94"), "studentno" : "1", "Name" : "Madhuri", "place" : "Hebbal" }
+{ "_id" : ObjectId("6254fb4ca0ec4ee1af44fe30"), "studentno" : "2", "Name" : "Rakshith", "place" : "yelahanka" }
+> db.student.find().sort({Name:-1})
+{ "_id" : ObjectId("6254fb4ca0ec4ee1af44fe30"), "studentno" : "2", "Name" : "Rakshith", "place" : "yelahanka" }
+{ "_id" : ObjectId("6254f5451c3b4b8c58ec8e94"), "studentno" : "1", "Name" : "Madhuri", "place" : "Hebbal" }
+> 
