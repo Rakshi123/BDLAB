@@ -1,0 +1,78 @@
+> db.student.remove({"Name":"ramesh"})
+WriteResult({ "nRemoved" : 0 })
+> db.student.find()
+{ "_id" : ObjectId("624bbc6646246280f289ad1a"), "studentno" : "1", "Name" : "rakshith", "place" : "bangalore" }
+{ "_id" : ObjectId("624bbc9a46246280f289ad1b"), "studentno" : "2", "Name" : "ahdhu", "place" : "mysore" }
+{ "_id" : ObjectId("624bbdb746246280f289ad1c"), "studentno" : 3, "name" : "ramesh", "place" : "hubbali" }
+{ "_id" : ObjectId("624bbdb746246280f289ad1d"), "studentno" : 4, "name" : "bheem", "place" : "chennai" }
+> db.student.remove({"studentno":"1"})
+WriteResult({ "nRemoved" : 1 })
+> db.student.find()
+{ "_id" : ObjectId("624bbc9a46246280f289ad1b"), "studentno" : "2", "Name" : "ahdhu", "place" : "mysore" }
+{ "_id" : ObjectId("624bbdb746246280f289ad1c"), "studentno" : 3, "name" : "ramesh", "place" : "hubbali" }
+{ "_id" : ObjectId("624bbdb746246280f289ad1d"), "studentno" : 4, "name" : "bheem", "place" : "chennai" }
+> db.student.find()
+{ "_id" : ObjectId("624bbc9a46246280f289ad1b"), "studentno" : "2", "Name" : "Ram", "place" : "mysore" }
+{ "_id" : ObjectId("624bbdb746246280f289ad1c"), "studentno" : 3, "name" : "ramesh", "place" : "hubbali" }
+{ "_id" : ObjectId("624bbdb746246280f289ad1d"), "studentno" : 4, "name" : "bheem", "place" : "chennai" }
+{ "_id" : ObjectId("6254f3ee1c3b4b8c58ec8e93"), "studentno" : "4", "Name" : "Madhurii", "place" : "hebbal" }
+> db.student.remove({})
+WriteResult({ "nRemoved" : 4 })
+> db.student.find()
+> db.student.find()
+> db.student.insertOne({studentno:"5",Name:"Madhurii",place:"hebbal"})
+{
+	"acknowledged" : true,
+	"insertedId" : ObjectId("6254f5451c3b4b8c58ec8e94")
+}
+> db.student.find()
+{ "_id" : ObjectId("6254f5451c3b4b8c58ec8e94"), "studentno" : "5", "Name" : "Madhurii", "place" : "hebbal" }
+> db.student.find({"Name":{$in:["Ram","Madhurii"]}}).pretty()
+{
+	"_id" : ObjectId("6254f5451c3b4b8c58ec8e94"),
+	"studentno" : "5",
+	"Name" : "Madhurii",
+	"place" : "hebbal"
+}
+> db.student.find({"Name":{$nin:["Ramya"]}}).pretty()
+{
+	"_id" : ObjectId("6254f5451c3b4b8c58ec8e94"),
+	"studentno" : "5",
+	"Name" : "Madhurii",
+	"place" : "hebbal"
+}
+> db.student.find()
+{ "_id" : ObjectId("6254f5451c3b4b8c58ec8e94"), "studentno" : "5", "Name" : "Madhurii", "place" : "hebbal" }
+> db.student.findOneAndUpdate({Name:"Madhurii"},{$set:{studentno:"1"}})
+{
+	"_id" : ObjectId("6254f5451c3b4b8c58ec8e94"),
+	"studentno" : "5",
+	"Name" : "Madhurii",
+	"place" : "hebbal"
+}
+> db.student.find()
+{ "_id" : ObjectId("6254f5451c3b4b8c58ec8e94"), "studentno" : "1", "Name" : "Madhurii", "place" : "hebbal" }
+> db.student.save({studentno:"2",Name:"Rakshith",place:"yelahanka"})
+WriteResult({ "nInserted" : 1 })
+> db.student.find()
+{ "_id" : ObjectId("6254f5451c3b4b8c58ec8e94"), "studentno" : "1", "Name" : "Madhurii", "place" : "hebbal" }
+{ "_id" : ObjectId("6254fb4ca0ec4ee1af44fe30"), "studentno" : "2", "Name" : "Rakshith", "place" : "yelahanka" }
+> db.student.update({Name:"Madhurii"},{studentno:"5"})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.student.find()
+{ "_id" : ObjectId("6254f5451c3b4b8c58ec8e94"), "studentno" : "5" }
+{ "_id" : ObjectId("6254fb4ca0ec4ee1af44fe30"), "studentno" : "2", "Name" : "Rakshith", "place" : "yelahanka" }
+> db.student.update({studentno:"5"},{studentno:"1",Name:"Madhuri",place:"Hebbal"})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.student.find()
+{ "_id" : ObjectId("6254f5451c3b4b8c58ec8e94"), "studentno" : "1", "Name" : "Madhuri", "place" : "Hebbal" }
+{ "_id" : ObjectId("6254fb4ca0ec4ee1af44fe30"), "studentno" : "2", "Name" : "Rakshith", "place" : "yelahanka" }
+> db.student.find().sort({Name:1})
+{ "_id" : ObjectId("6254f5451c3b4b8c58ec8e94"), "studentno" : "1", "Name" : "Madhuri", "place" : "Hebbal" }
+{ "_id" : ObjectId("6254fb4ca0ec4ee1af44fe30"), "studentno" : "2", "Name" : "Rakshith", "place" : "yelahanka" }
+> db.student.find().sort({Name:-1})
+{ "_id" : ObjectId("6254fb4ca0ec4ee1af44fe30"), "studentno" : "2", "Name" : "Rakshith", "place" : "yelahanka" }
+{ "_id" : ObjectId("6254f5451c3b4b8c58ec8e94"), "studentno" : "1", "Name" : "Madhuri", "place" : "Hebbal" }
+> > db.student.aggregate([{$group:{_id:"$place",total:{$sum:1}}}])
+{ "_id" : "yelahanka", "total" : 1 }
+{ "_id" : "Hebbal", "total" : 2 }
