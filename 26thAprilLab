@@ -155,3 +155,51 @@ WriteResult({ "nInserted" : 1 })
 { "_id" : "New York", "total" : 120000 }
 { "_id" : "London", "total" : 50000 }
 { "_id" : "Hebbal", "total" : 25000 }
+db.student.aggregate([{$sort:{Age:-1}},{$group:{_id:"$salary"}}])
+{ "_id" : 50000 }
+{ "_id" : 75000 }
+{ "_id" : 120000 }
+{ "_id" : 40000 }
+{ "_id" : 25000 }
+{ "_id" : 100000 }
+> db.student.aggregate([{$sort:{Age:-1}},{$group:{_id:"$salary",{$sum:"$Age"}}}])
+uncaught exception: SyntaxError: expected property name, got '{' :
+@(shell):1:62
+> db.student.aggregate([{$sort:{Age:-1}},{$group:{_id:"$salary",total:{$sum:"$Age"}}}])
+{ "_id" : 50000, "total" : 61 }
+{ "_id" : 75000, "total" : 20 }
+{ "_id" : 120000, "total" : 30 }
+{ "_id" : 40000, "total" : 31 }
+{ "_id" : 25000, "total" : 28 }
+{ "_id" : 100000, "total" : 35 }
+> db.student.aggregate([{$sort:{Age:-1}}])
+{ "_id" : ObjectId("62676faf436a3cd3e7459b7b"), "Name" : "Madhu", "Age" : 40, "place" : "London", "salary" : 50000 }
+{ "_id" : ObjectId("62676fa0436a3cd3e7459b7a"), "Name" : "Sam", "Age" : 35, "place" : "New York", "salary" : 100000 }
+{ "_id" : ObjectId("626770b4436a3cd3e7459b7c"), "Name" : "Ramesh", "Age" : 31, "place" : "yelahanka", "salary" : 40000 }
+{ "_id" : ObjectId("626770b4436a3cd3e7459b7e"), "Name" : "John", "Age" : 30, "place" : "New York", "salary" : 120000 }
+{ "_id" : ObjectId("626770b4436a3cd3e7459b7d"), "Name" : "Ram", "Age" : 28, "place" : "Hebbal", "salary" : 25000 }
+{ "_id" : ObjectId("62676fa0436a3cd3e7459b78"), "Name" : "Rakshith", "Age" : 21, "place" : "yelahanka", "salary" : 50000 }
+{ "_id" : ObjectId("62676fa0436a3cd3e7459b79"), "Name" : "Madhuri", "Age" : 20, "place" : "Hebbal", "salary" : 75000 }
+> db.student.aggregate([{$sort:{Age:1}}])
+{ "_id" : ObjectId("62676fa0436a3cd3e7459b79"), "Name" : "Madhuri", "Age" : 20, "place" : "Hebbal", "salary" : 75000 }
+{ "_id" : ObjectId("62676fa0436a3cd3e7459b78"), "Name" : "Rakshith", "Age" : 21, "place" : "yelahanka", "salary" : 50000 }
+{ "_id" : ObjectId("626770b4436a3cd3e7459b7d"), "Name" : "Ram", "Age" : 28, "place" : "Hebbal", "salary" : 25000 }
+{ "_id" : ObjectId("626770b4436a3cd3e7459b7e"), "Name" : "John", "Age" : 30, "place" : "New York", "salary" : 120000 }
+{ "_id" : ObjectId("626770b4436a3cd3e7459b7c"), "Name" : "Ramesh", "Age" : 31, "place" : "yelahanka", "salary" : 40000 }
+{ "_id" : ObjectId("62676fa0436a3cd3e7459b7a"), "Name" : "Sam", "Age" : 35, "place" : "New York", "salary" : 100000 }
+{ "_id" : ObjectId("62676faf436a3cd3e7459b7b"), "Name" : "Madhu", "Age" : 40, "place" : "London", "salary" : 50000 }
+var mapfunction=function(){emit(this.Age,this.salary)}
+> var reducefunction=function(key,values){return Array.sum(values)}
+> db.student.mapReduce(mapfunction,reducefunction,{'out':'result'})
+{ "result" : "result", "ok" : 1 }
+> db.result.find()
+{ "_id" : 40, "value" : 50000 }
+{ "_id" : 28, "value" : 25000 }
+{ "_id" : 35, "value" : 100000 }
+{ "_id" : 31, "value" : 40000 }
+{ "_id" : 21, "value" : 100000 }
+{ "_id" : 30, "value" : 120000 }
+{ "_id" : 20, "value" : 75000 }
+ 
+
+
