@@ -1,0 +1,157 @@
+> db.student.aggregate([{$project:{_id:"$place",total:{$sum:1}}}])
+{ "_id" : "Hebbal", "total" : 1 }
+{ "_id" : "yelahanka", "total" : 1 }
+{ "_id" : "Hebbal", "total" : 1 }
+> db.student.aggregate([{$group:{_id:"$place",total:{$sum:1}}}])
+{ "_id" : "Hebbal", "total" : 2 }
+{ "_id" : "yelahanka", "total" : 1 }
+> db.student.aggregate([{$match:{Name :"Madhuri"}])
+... 
+... 
+> db.student.aggregate([{$match:{Name:"Madhuri"},{_id:"$placedb.student.aggregate([{$match:{Name:"Madhuri"},{_id:"$placedb.student.aggregate([{$match:{Name:"Madhuri"},{_id:"$placedb.student.aggregate([{$match:{Name:"Madhuri"},{_id:"$placedb.student.aggregate([{$match:{Name:"Madhuri"},{_idb.student.aggregate([{$match:{Name:"Madri"},{_id:"$place",total:{$sum:1}}}])
+uncaught exception: SyntaxError: expected property name, got '{' :
+@(shell):1:45
+> db.student.aggregate([{$match:{place:"Hebbal"},{_id:"$Name",total:{$sum:1}}}])
+uncaught exception: SyntaxError: expected property name, got '{' :
+@(shell):1:47
+> db.student.aggregate([{$match:{place:"Hebbal"},{$group:{_id:"$Name",total:{$sum:1}}})
+... 
+... 
+> db.student.aggregate([{$match:{place:"Hebbal"},{$group:{_id:"$Name",total:{$sum:$Studentno}}}])
+... 
+... 
+> db.student.remove()
+uncaught exception: Error: remove needs a query :
+DBCollection.prototype._parseRemove@src/mongo/shell/collection.js:364:15
+DBCollection.prototype.remove@src/mongo/shell/collection.js:394:18
+@(shell):1:1
+> db.student.delete()
+uncaught exception: TypeError: db.student.delete is not a function :
+@(shell):1:1
+> db.student.delete({})
+uncaught exception: TypeError: db.student.delete is not a function :
+@(shell):1:1
+> db.student.remove({})
+WriteResult({ "nRemoved" : 3 })
+> db.student.remove({})
+WriteResult({ "nRemoved" : 0 })
+> db.student.find()
+> db.student.insertMany([{Name:"Rakshith",Age:"21",place:"yelahanka",salary:"50000"},{Name:"Madhuri",Age:"20",place:"Hebbal",salary:"75000"},{Name:"Sam",Age:"35",place:"New York",salary:"100000"}])
+{
+	"acknowledged" : true,
+	"insertedIds" : [
+		ObjectId("62676d9a436a3cd3e7459b74"),
+		ObjectId("62676d9a436a3cd3e7459b75"),
+		ObjectId("62676d9a436a3cd3e7459b76")
+	]
+}
+> db.student.find()
+{ "_id" : ObjectId("62676d9a436a3cd3e7459b74"), "Name" : "Rakshith", "Age" : "21", "place" : "yelahanka", "salary" : "50000" }
+{ "_id" : ObjectId("62676d9a436a3cd3e7459b75"), "Name" : "Madhuri", "Age" : "20", "place" : "Hebbal", "salary" : "75000" }
+{ "_id" : ObjectId("62676d9a436a3cd3e7459b76"), "Name" : "Sam", "Age" : "35", "place" : "New York", "salary" : "100000" }
+> db.student.aggregate([{$match:{salary:"50000"},{$group:{_id:"$Age",total:{$sum:$salary}}}])
+... db.student.find()
+... 
+... 
+> db.student.aggregate([{$match:{salary:"50000"}},{$group:{_id:"$place",total:{$sum:$salary}}}])
+uncaught exception: ReferenceError: $salary is not defined :
+@(shell):1:78
+> db.student.aggregate([{$match:{salary:50000}},{$group:{_id:"$place",total:{$sum:$salary}}}])
+uncaught exception: ReferenceError: $salary is not defined :
+@(shell):1:76
+> db.student.insert({Name:"Madhu",Age:"40",place:"London",salary:"50000"})
+WriteResult({ "nInserted" : 1 })
+> db.student.find()
+{ "_id" : ObjectId("62676d9a436a3cd3e7459b74"), "Name" : "Rakshith", "Age" : "21", "place" : "yelahanka", "salary" : "50000" }
+{ "_id" : ObjectId("62676d9a436a3cd3e7459b75"), "Name" : "Madhuri", "Age" : "20", "place" : "Hebbal", "salary" : "75000" }
+{ "_id" : ObjectId("62676d9a436a3cd3e7459b76"), "Name" : "Sam", "Age" : "35", "place" : "New York", "salary" : "100000" }
+{ "_id" : ObjectId("62676ed3436a3cd3e7459b77"), "Name" : "Madhu", "Age" : "40", "place" : "London", "salary" : "50000" }
+> db.student.aggregate([{$match:{salary:50000}},{$group:{_id:"$place",total:{$sum:$salary}}}])
+uncaught exception: ReferenceError: $salary is not defined :
+@(shell):1:76
+> db.student.aggregate([{$match:{salary:50000}},{$group:{_id:"$place",total:{$sum:"$salary"}}}])
+> 
+> 
+> db.student.aggregate([{$match:{salary:50000}},{$group:{_id:"$place",total:{$avg:"$salary"}}}])
+> db.student.aggregate([{$match:{salary:50000}},{$group:{_id:"$Age",total:{$avg:"$salary"}}}])
+> db.student.aggregate([{$match:{salary:50000}},{$group:{_id:"$Age",total:{$sum:"$salary"}}}])
+> db.student.aggregate([{$match:{salary:"50000"}},{$group:{_id:"$Age",total:{$sum:"$salary"}}}])
+{ "_id" : "21", "total" : 0 }
+{ "_id" : "40", "total" : 0 }
+> db.student.remove({})
+WriteResult({ "nRemoved" : 4 })
+> db.student.insertMany([{Name:"Rakshith",Age:21,place:"yelahanka",salary:50000},{Name:"Madhuri",Age:20,place:"Hebbal",salary:75000},{Name:"Sam",Age:35,place:"New York",salary:100000}])
+{
+	"acknowledged" : true,
+	"insertedIds" : [
+		ObjectId("62676fa0436a3cd3e7459b78"),
+		ObjectId("62676fa0436a3cd3e7459b79"),
+		ObjectId("62676fa0436a3cd3e7459b7a")
+	]
+}
+> db.student.insert({Name:"Madhu",Age:40,place:"London",salary:50000})
+WriteResult({ "nInserted" : 1 })
+> db.student.aggregate([{$match:{salary:50000}},{$group:{_id:"$Age",total:{$sum:"$salary"}}}])
+{ "_id" : 40, "total" : 50000 }
+{ "_id" : 21, "total" : 50000 }
+> db.student.aggregate([{$match:{salary:50000}},{$group:{_id:"$Age",total:{$avg:"$salary"}}}])
+{ "_id" : 21, "total" : 50000 }
+{ "_id" : 40, "total" : 50000 }
+> db.student.aggregate([{$match:{salary:50000}},{$group:{_id:"$Age",total:{$min:"$salary"}}}])
+{ "_id" : 21, "total" : 50000 }
+{ "_id" : 40, "total" : 50000 }
+> db.student.aggregate([{$match:{salary:50000}},{$group:{_id:"$Age",total:{$max:"$salary"}}}])
+{ "_id" : 21, "total" : 50000 }
+{ "_id" : 40, "total" : 50000 }
+> db.student.aggregate([{$group:{_id:"$Age",total:{$max:"$salary"}}}])
+{ "_id" : 40, "total" : 50000 }
+{ "_id" : 35, "total" : 100000 }
+{ "_id" : 21, "total" : 50000 }
+{ "_id" : 20, "total" : 75000 }
+> db.student.aggregate([{$group:{_id:"$Name",total:{$max:"$salary"}}}])
+{ "_id" : "Madhuri", "total" : 75000 }
+{ "_id" : "Sam", "total" : 100000 }
+{ "_id" : "Madhu", "total" : 50000 }
+{ "_id" : "Rakshith", "total" : 50000 }
+> db.student.aggregate([{$group:{_id:"$place",total:{$max:"$salary"}}}])
+{ "_id" : "yelahanka", "total" : 50000 }
+{ "_id" : "New York", "total" : 100000 }
+{ "_id" : "London", "total" : 50000 }
+{ "_id" : "Hebbal", "total" : 75000 }
+> db.student.insertMany([{Name:"Ramesh",Age:31,place:"yelahanka",salary:40000},{Name:"Ram",Age:28,place:"Hebbal",salary:25000},{Name:"John",Age:30,place:"New York",salary:120000}])
+{
+	"acknowledged" : true,
+	"insertedIds" : [
+		ObjectId("626770b4436a3cd3e7459b7c"),
+		ObjectId("626770b4436a3cd3e7459b7d"),
+		ObjectId("626770b4436a3cd3e7459b7e")
+	]
+}
+> db.student.aggregate([{$group:{_id:"$place",total:{$max:"$salary"}}}])
+{ "_id" : "yelahanka", "total" : 50000 }
+{ "_id" : "New York", "total" : 120000 }
+{ "_id" : "London", "total" : 50000 }
+{ "_id" : "Hebbal", "total" : 75000 }
+> db.student.aggregate([{$match:{salary:50000}},{$group:{_id:"$Age",total:{$min:"$salary"}}}])
+{ "_id" : 21, "total" : 50000 }
+{ "_id" : 40, "total" : 50000 }
+> db.student.aggregate([{$group:{_id:"$place",total:{$min:"$salary"}}}])
+{ "_id" : "yelahanka", "total" : 40000 }
+{ "_id" : "New York", "total" : 100000 }
+{ "_id" : "London", "total" : 50000 }
+{ "_id" : "Hebbal", "total" : 25000 }
+> db.student.aggregate([{$group:{_id:"$place",total:{$avg:"$salary"}}}])
+{ "_id" : "yelahanka", "total" : 45000 }
+{ "_id" : "New York", "total" : 110000 }
+{ "_id" : "London", "total" : 50000 }
+{ "_id" : "Hebbal", "total" : 50000 }
+> db.student.aggregate([{$group:{_id:"$place",total:{$first:"$salary"}}}])
+{ "_id" : "yelahanka", "total" : 50000 }
+{ "_id" : "New York", "total" : 100000 }
+{ "_id" : "London", "total" : 50000 }
+{ "_id" : "Hebbal", "total" : 75000 }
+> db.student.aggregate([{$group:{_id:"$place",total:{$last:"$salary"}}}])
+{ "_id" : "yelahanka", "total" : 40000 }
+{ "_id" : "New York", "total" : 120000 }
+{ "_id" : "London", "total" : 50000 }
+{ "_id" : "Hebbal", "total" : 25000 }
