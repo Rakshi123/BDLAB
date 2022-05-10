@@ -200,6 +200,34 @@ var mapfunction=function(){emit(this.Age,this.salary)}
 { "_id" : 21, "value" : 100000 }
 { "_id" : 30, "value" : 120000 }
 { "_id" : 20, "value" : 75000 }
- 
+ db.student.insertOne({Name:"rajesh",Age:21,place:"bengaluru",salary:75000})
+{
+	"acknowledged" : true,
+	"insertedId" : ObjectId("6279e5add9acfae4bfc593f2")
+}
+> db.student.find()
+{ "_id" : ObjectId("62676fa0436a3cd3e7459b78"), "Name" : "Rakshith", "Age" : 21, "place" : "yelahanka", "salary" : 50000 }
+{ "_id" : ObjectId("62676fa0436a3cd3e7459b79"), "Name" : "Madhuri", "Age" : 20, "place" : "Hebbal", "salary" : 75000 }
+{ "_id" : ObjectId("62676fa0436a3cd3e7459b7a"), "Name" : "Sam", "Age" : 35, "place" : "New York", "salary" : 100000 }
+{ "_id" : ObjectId("62676faf436a3cd3e7459b7b"), "Name" : "Madhu", "Age" : 40, "place" : "London", "salary" : 50000 }
+{ "_id" : ObjectId("626770b4436a3cd3e7459b7c"), "Name" : "Ramesh", "Age" : 31, "place" : "yelahanka", "salary" : 40000 }
+{ "_id" : ObjectId("626770b4436a3cd3e7459b7d"), "Name" : "Ram", "Age" : 28, "place" : "Hebbal", "salary" : 25000 }
+{ "_id" : ObjectId("626770b4436a3cd3e7459b7e"), "Name" : "John", "Age" : 30, "place" : "New York", "salary" : 120000 }
+{ "_id" : ObjectId("62677a99436a3cd3e7459b7f"), "Name" : "Samuel", "Age" : 21, "place" : "Boston", "salary" : 50000 }
+{ "_id" : ObjectId("6279e579d9acfae4bfc593f1"), "Name" : "rajesh", "Age" : 21, "place" : "bengaluru", "salary" : 75000 }
+{ "_id" : ObjectId("6279e5add9acfae4bfc593f2"), "Name" : "rajesh", "Age" : 21, "place" : "bengaluru", "salary" : 75000 }
+> var mapfunction=function(){emit(this.Age,this.salary)}
+> var reducefunction=function(key,values){return Array.avg(values)}
+> db.student.mapReduce(mapfunction,reducefunction,{'out':'result'})
+{ "result" : "result", "ok" : 1 }
+> db.result.find()
+{ "_id" : 21, "value" : 62500 }
+{ "_id" : 20, "value" : 75000 }
+{ "_id" : 35, "value" : 100000 }
+{ "_id" : 40, "value" : 50000 }
+{ "_id" : 31, "value" : 40000 }
+{ "_id" : 28, "value" : 25000 }
+{ "_id" : 30, "value" : 120000 }
+
 
 
